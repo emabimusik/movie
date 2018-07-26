@@ -1,0 +1,60 @@
+<!--Panel-->
+<div class="card">
+    <h3 class="card-header primary-color white-text">Movies List</h3>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-2">Search</div>
+            <div class="col-md-4">
+                <input type="text" [(ngModel)]="listfilter" placeholder="Search" class="btn btn-outline-success" mdbWavesEffect />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6" *ngIf='listfilter'  >
+                Searching :{{listfilter}}
+            </div>
+        </div>
+       <!--Table-->
+       <table class="table"  *ngIf='movies && movies.length'>
+        <thead>
+          <tr>
+            <th>
+                <button class="btn btn-outline-secondary" mdbWavesEffect  (click)='toggleImage()'> 
+                    {{seePoster ? 'Hide':'See'}} Poster
+                </button>
+            </th>
+            <th>Movie</th>
+            <th>Starring</th>
+            <th>Cost</th>
+            <th>Available</th>
+            <th>Rating</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let movie of movies | movieFilter:listfilter">
+            <td>
+                <img *ngIf='seePoster'
+                     [src] ='movie.imageUrl'
+                     [title]='movie.movieName'
+                     [style.width.px]='50'
+                    [style.margin.px]='2'/>
+            </td>
+            <!--<td>{{movie.movieId}}</td>!-->
+     
+            <td [routerLink]="['/movie',movie.movieId]">
+                {{movie.movieName }} 
+            </td> 
+            <td>{{movie.movieStar}}</td>
+            <td>{{movie.price|currency:'CAD'}}</td>
+            <td>{{movie.releaseDate}}</td>
+            <td><app-review [rating]="movie.starRating"
+            ></app-review ></td>
+            
+          </tr>
+          
+        </tbody>
+      </table>
+       
+    </div>
+    <a class="btn btn-primary waves-light" mdbWavesEffect>Go somewhere</a>
+</div>
+<!--/.Panel-->
